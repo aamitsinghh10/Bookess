@@ -1,13 +1,16 @@
 package com.spring.mvc.database;
 
 import com.spring.mvc.entity.Book;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -17,7 +20,7 @@ import java.util.List;
 public class BookDatabase {
     @Autowired
     private SessionFactory sessionFactory;
-    @Autowired
+    //@Autowired
     private JdbcTemplate jdbcTemplate;
 
     public void addBook(Book book) {
@@ -57,5 +60,18 @@ public class BookDatabase {
         Book book = session.get(Book.class, id);
         session.delete(book);
     }
-
+    public Book findByTitleAndAuthor(String title, String author) {
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Book> criteria = builder.createQuery(Book.class);
+        Root<Book> root = criteria.from(Book.class);
+        criteria.select(root);
+        criteria.where(builder.and(builder.equal(root.get("title"), title), builder.equal(root.get("author"), author)));
+        Query query = session.createQuery(criteria);
+        List<Book> results = query.getResultList();
+        if (results.isEmpty()) {
+            return null;
+        }
+        return results.get(0);
+    }
 }

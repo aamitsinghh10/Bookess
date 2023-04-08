@@ -3,8 +3,8 @@ package com.spring.mvc.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "books")
-public class Book {
+@Table(name = "readLater")
+public class ReadLaterBooks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,7 +17,18 @@ public class Book {
     private double rating;
     private double price;
 
-    // Getters and setters for all the fields
+    // getters and setters
+    public ReadLaterBooks(long id, String title, String author, String isbn, String genre, String description, double rating, double price, String coverImage) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.isbn = isbn;
+        this.genre = genre;
+        this.description = description;
+        this.rating = rating;
+        this.price = price;
+        this.coverImage = coverImage;
+    }
 
     public Long getId() {
         return id;
@@ -93,7 +104,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
+        return "ReadLaterBooks{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +

@@ -37,10 +37,10 @@ h1 {
 }
 
 .card-img-top {
-  height: 250px !important;
-  width: 100% !important; /* set width to 100% */
+  width: 100% !important;
   object-fit: cover;
 }
+
 
 .card:hover {
   transform: translateY(-0.25rem);
