@@ -57,8 +57,8 @@
                              <div class="d-flex justify-content-between align-items-center">
                                <div class="btn-group">
                                  <a href="bookDetails?bookId=${book.id}" class="btn btn-sm btn-outline-secondary">View More</a>
-                                 <a href="${pageContext.request.contextPath}/addToReadLater?bookId=${book.id}" class="btn btn-sm btn-outline-secondary addToReadLater">Read Later</a>
-                                 <a href="liked" class="btn btn-sm btn-outline-secondary addToLiked">Liked</a>
+                                 <a href="${pageContext.request.contextPath}/readLater?bookId=${book.id}" class="btn btn-sm btn-outline-secondary addToReadLater">Read Later</a>
+                                 <a href="${pageContext.request.contextPath}/readLater?bookId=${book.id}" class="btn btn-sm btn-outline-secondary addToLiked">Liked</a>
                                </div>
                              </div>
                            </div>

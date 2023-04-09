@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import javax.transaction.Transactional;
 
 @Service
+@Transactional
 public class BookService {
 
     @Autowired
