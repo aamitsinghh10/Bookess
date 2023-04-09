@@ -20,17 +20,18 @@ public class LikedBooks {
     // getters and setters
 
 
-    public LikedBooks(Long id, String title, String author, String isbn, String genre, String description, String coverImage, double rating, double price) {
+    public LikedBooks(long id, String title, String author, String isbn, String genre, String description, double rating, double price, String coverImage) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.isbn = isbn;
         this.genre = genre;
         this.description = description;
-        this.coverImage = coverImage;
         this.rating = rating;
         this.price = price;
+        this.coverImage = coverImage;
     }
+
 
     public Long getId() {
         return id;

@@ -1,5 +1,7 @@
 package com.spring.mvc.entity;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,17 +9,49 @@ import javax.persistence.*;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "author")
     private String author;
+
+    @Column(name = "isbn")
     private String isbn;
+
+    @Column(name = "genre")
     private String genre;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "coverImage")
     private String coverImage;
+
+    @Column(name = "rating")
     private double rating;
+
+    @Column(name = "price")
     private double price;
 
     // Getters and setters for all the fields
+
+    public Book() {
+        // Default constructor
+    }
+
+    public Book(String title, String author, String isbn, String genre, String description, String coverImage, double rating, double price) {
+        //this.id = id;
+        this.title = title;
+        this.author = author;
+        this.isbn = isbn;
+        this.genre = genre;
+        this.description = description;
+        this.coverImage = coverImage;
+        this.rating = rating;
+        this.price = price;
+    }
 
     public Long getId() {
         return id;

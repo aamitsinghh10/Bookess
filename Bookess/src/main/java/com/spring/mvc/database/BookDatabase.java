@@ -1,57 +1,79 @@
 package com.spring.mvc.database;
 
 import com.spring.mvc.entity.Book;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
+@Transactional
 public class BookDatabase {
     @Autowired
     private SessionFactory sessionFactory;
-    //@Autowired
-    private JdbcTemplate jdbcTemplate;
 
     public void addBook(Book book) {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        session.save(book);
-        tx.commit();
-    }
-
-    public Book getBookById(Long id) {
         Session session = sessionFactory.openSession();
-        Book book = session.get(Book.class, id);
+        Transaction tx = session.beginTransaction();
+
+        try {
+            Book existingBook = findByIsbn(book.getIsbn());
+            if (existingBook != null) {
+                throw new RuntimeException("Book with ISBN " + book.getIsbn() + " already exists");
+            }
+            session.save(book);
+            tx.commit();
+        } catch (RuntimeException e) {
+            tx.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+    public Book getBookById(long bookId){
+        Session session = sessionFactory.getCurrentSession();
+        Book book = session.get(Book.class, bookId);
         session.close();
+
         return book;
     }
 
-    public List<Book> getAllBooks() {
-        Session session = sessionFactory.openSession();
-        List<Book> books = session.createQuery("from Book", Book.class).getResultList();
+    public Book getBookByIsbn(String isbn) {
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Book> criteria = builder.createQuery(Book.class);
+        Root<Book> root = criteria.from(Book.class);
+        criteria.select(root);
+        criteria.where(builder.equal(root.get("isbn"), isbn));
+        Query query = session.createQuery(criteria);
+        List<Book> results = query.getResultList();
+        if (results.isEmpty()) {
+            return null;
+        }
+        return results.get(0);
+    }
 
-        session.close();
-        return books;
+    public List<Book> getAllBooks() {
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Book> criteria = builder.createQuery(Book.class);
+        Root<Book> root = criteria.from(Book.class);
+        criteria.select(root);
+        Query query = session.createQuery(criteria);
+        return query.getResultList();
     }
 
     public boolean updateBook(Book book) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
         session.update(book);
-        tx.commit();
-
-        session.close();
         return true;
     }
 
@@ -60,13 +82,14 @@ public class BookDatabase {
         Book book = session.get(Book.class, id);
         session.delete(book);
     }
-    public Book findByTitleAndAuthor(String title, String author) {
+
+    public Book findByIsbn(String isbn) {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Book> criteria = builder.createQuery(Book.class);
         Root<Book> root = criteria.from(Book.class);
         criteria.select(root);
-        criteria.where(builder.and(builder.equal(root.get("title"), title), builder.equal(root.get("author"), author)));
+        criteria.where(builder.equal(root.get("isbn"), isbn));
         Query query = session.createQuery(criteria);
         List<Book> results = query.getResultList();
         if (results.isEmpty()) {

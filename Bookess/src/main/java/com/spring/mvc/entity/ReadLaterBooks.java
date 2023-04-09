@@ -18,6 +18,11 @@ public class ReadLaterBooks {
     private double price;
 
     // getters and setters
+
+    public ReadLaterBooks() {
+        //default constructor
+    }
+
     public ReadLaterBooks(long id, String title, String author, String isbn, String genre, String description, double rating, double price, String coverImage) {
         this.id = id;
         this.title = title;
@@ -29,6 +34,8 @@ public class ReadLaterBooks {
         this.price = price;
         this.coverImage = coverImage;
     }
+
+
 
     public Long getId() {
         return id;

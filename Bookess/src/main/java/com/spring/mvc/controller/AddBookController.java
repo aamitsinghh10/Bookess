@@ -5,11 +5,13 @@ import com.spring.mvc.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -25,21 +27,19 @@ public class AddBookController {
     }
 
     @PostMapping("/addBook")
-    public String addBook(@ModelAttribute("book") Book book, Model model, HttpServletRequest request) {
-        List<Book> bookList = bookService.getAllBooks();
-        boolean bookExists = false;
-        for (Book existingBook : bookList) {
-            if (existingBook.getTitle().equals(book.getTitle()) && existingBook.getAuthor().equals(book.getAuthor())) {
-                bookExists = true;
-                break;
-            }
+    public String addBook(@ModelAttribute("book") @Valid Book book, BindingResult result, Model model, HttpServletRequest request) {
+        if(result.hasErrors()){
+            return "addBook";
         }
-        if (bookExists) {
+        Book existingBook = bookService.findByIsbn(book.getIsbn());
+        if (existingBook != null) {
             model.addAttribute("errorMessage", "Book already exists in the database!");
         } else {
             bookService.addBook(book);
             model.addAttribute("successMessage", "Book added successfully!");
         }
-        return "dashboard";
+        return "redirect:dashboard";
     }
+
+
 }

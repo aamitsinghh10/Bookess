@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class RegisterController {
-
     @Autowired
     private UserService userService;
-
     @GetMapping("/register")
     public String registerPage() {
         return "register";
