@@ -25,4 +25,7 @@ public class UserService {
     public boolean validateUser(LoginDTO dto) throws Exception {
         return this.userDatabase.loginUser(dto);
     }
+    public User getUserByEmail(String email){
+        return this.userDatabase.getUserByEmail(email);
+    }
 }

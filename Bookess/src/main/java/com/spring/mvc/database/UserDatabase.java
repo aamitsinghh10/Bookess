@@ -53,5 +53,11 @@ public class UserDatabase {
         session.close();
         return true;
     }
+    public User getUserByEmail(String email){
+        Session session = factory.openSession();
+        User user = session.get(User.class, email);
+        session.close();
+        return user;
+    }
 
 }

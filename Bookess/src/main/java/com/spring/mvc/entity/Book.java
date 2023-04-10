@@ -1,7 +1,5 @@
 package com.spring.mvc.entity;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.*;
 
 @Entity
@@ -17,7 +15,7 @@ public class Book {
     @Column(name = "author")
     private String author;
 
-    @Column(name = "isbn")
+    @Column(name = "isbn",unique = true)
     private String isbn;
 
     @Column(name = "genre")

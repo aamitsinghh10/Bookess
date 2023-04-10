@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 public class AddBookController {
-
     @Autowired
     private BookService bookService;
 
@@ -27,19 +25,22 @@ public class AddBookController {
     }
 
     @PostMapping("/addBook")
-    public String addBook(@ModelAttribute("book") @Valid Book book, BindingResult result, Model model, HttpServletRequest request) {
-        if(result.hasErrors()){
+    public String addPostBookPage(Model model, @Valid @ModelAttribute("book") Book book,
+                                  BindingResult bindingResult, HttpServletRequest request) {
+        if (bindingResult.hasErrors()) {
             return "addBook";
         }
-        Book existingBook = bookService.findByIsbn(book.getIsbn());
-        if (existingBook != null) {
-            model.addAttribute("errorMessage", "Book already exists in the database!");
-        } else {
+        try {
             bookService.addBook(book);
-            model.addAttribute("successMessage", "Book added successfully!");
+            return "redirect:/dashboard";
+        } catch (RuntimeException e) {
+            model.addAttribute("error", "Error occurred while adding book: " + e.getMessage());
+            Book existingBook = bookService.findByIsbn(book.getIsbn());
+            if (existingBook != null) {
+                model.addAttribute("existingBook", existingBook);
+            }
+            return "addBook";
         }
-        return "redirect:dashboard";
     }
-
 
 }

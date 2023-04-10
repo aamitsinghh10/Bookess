@@ -1,6 +1,7 @@
 package com.spring.mvc.controller;
 
 import com.spring.mvc.dto.LoginDTO;
+import com.spring.mvc.entity.User;
 import com.spring.mvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,9 +53,10 @@ public class LoginController {
         System.out.println("login request " + dto.getEmail() + " " + dto.getPassword());
 
         try {
-            if (userService.validateUser(dto)) {
-                session.setAttribute("email", dto.getEmail());
-                Cookie cookie = new Cookie("email", dto.getEmail());
+            User user = userService.getUserByEmail(dto.getEmail());
+            if (user != null && user.getPassword().equals(dto.getPassword())) {
+                session.setAttribute("username", user.getUserName());
+                Cookie cookie = new Cookie("username", user.getUserName());
                 response.addCookie(cookie);
                 return "redirect:/dashboard";
             }
@@ -64,5 +66,4 @@ public class LoginController {
         }
         return "redirect:/login?error=Invalid Credentials";
     }
-
 }

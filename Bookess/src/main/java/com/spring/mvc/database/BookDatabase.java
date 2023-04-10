@@ -21,28 +21,28 @@ public class BookDatabase {
     private SessionFactory sessionFactory;
 
     public void addBook(Book book) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = null;
         try {
-            Book existingBook = findByIsbn(book.getIsbn());
-            if (existingBook != null) {
-                throw new RuntimeException("Book with ISBN " + book.getIsbn() + " already exists");
+            if (!session.getTransaction().isActive()) {
+                tx = session.beginTransaction();
             }
             session.save(book);
-            tx.commit();
-        } catch (RuntimeException e) {
-            tx.rollback();
-            throw e;
-        } finally {
-            session.close();
+            if (tx != null) {
+                tx.commit();
+            }
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
         }
     }
+
     public Book getBookById(long bookId){
         Session session = sessionFactory.getCurrentSession();
         Book book = session.get(Book.class, bookId);
         session.close();
-
         return book;
     }
 

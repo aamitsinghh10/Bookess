@@ -22,6 +22,7 @@ public class ReadLaterController {
 
     @GetMapping("/readLater")
     public String showReadLaterPage(Model model) {
+        System.out.println("read later get mapping");
         List<ReadLaterBooks> readLaterBooks = readLaterService.getReadLaterBooks();
         model.addAttribute("readLaterBooks", readLaterBooks);
         return "readLater";
