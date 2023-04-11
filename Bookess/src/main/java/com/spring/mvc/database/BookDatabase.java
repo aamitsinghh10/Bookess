@@ -1,6 +1,7 @@
 package com.spring.mvc.database;
 
 import com.spring.mvc.entity.Book;
+import com.spring.mvc.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -21,14 +22,15 @@ public class BookDatabase {
     private SessionFactory sessionFactory;
 
     public void addBook(Book book) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Transaction tx = null;
         try {
-            if (!session.getTransaction().isActive()) {
-                tx = session.beginTransaction();
-            }
-            session.save(book);
-            if (tx != null) {
+            tx = session.beginTransaction();
+            Book existingBook = getBookByIsbn(book.getIsbn());
+            if (existingBook != null) {
+                System.out.println("Book with same ISBN already exists in the database");
+            } else {
+                session.save(book);
                 tx.commit();
             }
         } catch (Exception e) {
@@ -36,12 +38,21 @@ public class BookDatabase {
                 tx.rollback();
             }
             e.printStackTrace();
+        } finally {
+            session.close();
         }
     }
+
 
     public Book getBookById(long bookId){
         Session session = sessionFactory.getCurrentSession();
         Book book = session.get(Book.class, bookId);
+        session.close();
+        return book;
+    }
+    public Book loadBook(long bookId) {
+        Session session = sessionFactory.getCurrentSession();
+        Book book = session.load(Book.class, bookId);
         session.close();
         return book;
     }
@@ -62,6 +73,7 @@ public class BookDatabase {
     }
 
     public List<Book> getAllBooks() {
+
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Book> criteria = builder.createQuery(Book.class);
@@ -97,4 +109,5 @@ public class BookDatabase {
         }
         return results.get(0);
     }
+
 }

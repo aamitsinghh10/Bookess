@@ -14,7 +14,10 @@ public class BookService {
     private BookDatabase bookDatabase;
 
     public void addBook(Book book) {
-        bookDatabase.addBook(book);
+        this.bookDatabase.addBook(book);
+    }
+    public Book loadBook(long bookid){
+        return this.bookDatabase.loadBook(bookid);
     }
 
     public Book getBookByIsbn(String isbn) {

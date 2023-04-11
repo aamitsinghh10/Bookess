@@ -1,0 +1,16 @@
+.card-img-top:hover {
+    transform: scale(1.1); /* increase size of image by 10% */
+    transition: transform 0.3s ease-in-out; /* add smooth animation effect */
+}
+.card-title {
+    font-size: 1.5rem; /* set font size */
+    font-weight: bold; /* set font weight */
+    color: #333; /* set font color */
+    margin-bottom: 0.5rem; /* add some spacing below the title */
+}
+
+.card-text {
+    font-size: 1.1rem; /* set font size */
+    color: #555; /* set font color */
+    margin-bottom: 1rem; /* add some spacing below the text */
+}

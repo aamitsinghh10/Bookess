@@ -20,6 +20,9 @@ public class LikedBooks {
     // getters and setters
 
 
+    public LikedBooks() {
+    }
+
     public LikedBooks(long id, String title, String author, String isbn, String genre, String description, double rating, double price, String coverImage) {
         this.id = id;
         this.title = title;

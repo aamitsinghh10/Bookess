@@ -15,18 +15,18 @@ public class LikedDatabase {
     @Autowired
     private SessionFactory factory;
     public void addLikedBooks(LikedBooks likedBooks) {
-        if (!likedBookExists(likedBooks.getTitle(), likedBooks.getAuthor())) {
+        if (!likedBookExists(likedBooks.getIsbn())) {
+            System.out.println("AddLikedBooks");
             Session session = factory.getCurrentSession();
             session.save(likedBooks);
         }
     }
 
-    public boolean likedBookExists(String title, String author) {
+    public boolean likedBookExists(String isbn) {
         Session session = factory.getCurrentSession();
-        String sql = "FROM LikedBooks WHERE title = :title AND author = :author";
+        String sql = "FROM LikedBooks WHERE isbn = :isbn";
         LikedBooks likedBooks = session.createQuery(sql, LikedBooks.class)
-                .setParameter("title", title)
-                .setParameter("author", author)
+                .setParameter("isbn", isbn)
                 .uniqueResult();
         return likedBooks != null;
     }

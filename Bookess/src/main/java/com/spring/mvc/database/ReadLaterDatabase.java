@@ -6,6 +6,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -16,20 +20,27 @@ public class ReadLaterDatabase {
     private SessionFactory factory;
 
     public void addReadLaterBooks(ReadLaterBooks readLater) {
-        if (!bookExists(readLater.getTitle(), readLater.getAuthor())) {
-            Session session = factory.getCurrentSession();
-            session.save(readLater);
+        if (!bookExists(readLater.getIsbn())) {
+            try {
+                Session session = factory.getCurrentSession();
+                session.save(readLater);
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to add read later book", e);
+            }
+        } else {
+            System.out.println("Book already exists in Read Later list.");
         }
     }
-    public boolean bookExists(String title, String author) {
+
+    public boolean bookExists(String isbn) {
         Session session = factory.getCurrentSession();
-        String sql = "FROM ReadLaterBooks WHERE title = :title AND author = :author";
+        String sql = "FROM ReadLaterBooks WHERE isbn = :isbn";
         ReadLaterBooks readLater = session.createQuery(sql, ReadLaterBooks.class)
-                .setParameter("title", title)
-                .setParameter("author", author)
+                .setParameter("isbn", isbn)
                 .uniqueResult();
         return readLater != null;
     }
+
     public List<ReadLaterBooks> getReadLaterBooks() {
         Session session = factory.getCurrentSession();
         String sql = "SELECT new com.spring.mvc.entity.ReadLaterBooks(r.id, r.title, r.author, r.isbn, r.genre, r.description, r.rating, r.price, r.coverImage) FROM ReadLaterBooks r";
@@ -38,11 +49,18 @@ public class ReadLaterDatabase {
         return readLaterBooks;
     }
 
-    public void removeBook(long bookId) {
+    public ReadLaterBooks getReadLaterBookByIsbn(String isbn) {
         Session session = factory.getCurrentSession();
-        ReadLaterBooks readLater = session.get(ReadLaterBooks.class, bookId);
-        if (readLater != null) {
-            session.delete(readLater);
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<ReadLaterBooks> cq = cb.createQuery(ReadLaterBooks.class);
+        Root<ReadLaterBooks> root = cq.from(ReadLaterBooks.class);
+        cq.select(root).where(cb.equal(root.get("isbn"), isbn));
+        TypedQuery<ReadLaterBooks> query = session.createQuery(cq);
+        List<ReadLaterBooks> results = query.getResultList();
+        if (results.isEmpty()) {
+            return null;
+        } else {
+            return results.get(0);
         }
     }
 }

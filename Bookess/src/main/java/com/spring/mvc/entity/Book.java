@@ -1,5 +1,7 @@
 package com.spring.mvc.entity;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,7 +9,6 @@ import javax.persistence.*;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
     @Column(name = "title")
     private String title;
@@ -39,8 +40,8 @@ public class Book {
         // Default constructor
     }
 
-    public Book(String title, String author, String isbn, String genre, String description, String coverImage, double rating, double price) {
-        //this.id = id;
+    public Book(Long id,String title, String author, String isbn, String genre, String description, String coverImage, double rating, double price) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.isbn = isbn;

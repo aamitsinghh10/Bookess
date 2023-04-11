@@ -16,8 +16,8 @@ public class LikedService {
         this.likedDatabase.addLikedBooks(likedBooks);
     }
 
-    public boolean likedBookExists(String title, String author) {
-        return likedDatabase.likedBookExists(title, author);
+    public boolean likedBookExists(String isbn) {
+        return likedDatabase.likedBookExists(isbn);
     }
 
     public List<LikedBooks> getLikedBooks() {

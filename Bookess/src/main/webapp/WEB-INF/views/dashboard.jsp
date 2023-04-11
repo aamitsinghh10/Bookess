@@ -43,27 +43,32 @@
              <h1 class="mb-4">List Of Books</h1>
              <div class="row">
                  <c:forEach var="book" items="${books}">
-                     <div class="col-md-4">
-                         <div class="card mb-4 shadow-sm">
-                           <img src="${book.coverImage}" class="card-img-top" alt="${book.title} Cover Image">
-                           <div class="card-body">
-                             <h5 class="card-title">${book.title}</h5>
-                             <p class="card-text"><strong>Author:</strong> ${book.author}</p>
-                             <p class="card-text"><strong>ISBN:</strong> ${book.isbn}</p>
-                             <p class="card-text"><strong>Genre:</strong> ${book.genre}</p>
-                             <p class="card-text"><strong>Description:</strong> ${book.description}</p>
-                             <p class="card-text"><strong>Rating:</strong> ${book.rating}</p>
-                             <h6 class="card-subtitle mb-2 text-muted">Price: $${book.price}</h6>
-                             <div class="d-flex justify-content-between align-items-center">
-                               <div class="btn-group">
-                                 <a href="bookDetails?bookId=${book.id}" class="btn btn-sm btn-outline-secondary">View More</a>
-                                 <a href="${pageContext.request.contextPath}/readLater?bookId=${book.id}" class="btn btn-sm btn-outline-secondary addToReadLater">Read Later</a>
-                                 <a href="${pageContext.request.contextPath}/readLater?bookId=${book.id}" class="btn btn-sm btn-outline-secondary addToLiked">Liked</a>
-                               </div>
-                             </div>
+                   <div class="col-md-4">
+                     <div class="card mb-4 shadow-sm">
+                       <img src="${book.coverImage}" class="card-img-top" alt="${book.title} Cover Image">
+                       <div class="card-body">
+                         <h5 class="card-title">${book.title}</h5>
+                         <p class="card-text"><strong>Author:</strong> ${book.author}</p>
+                         <p class="card-text"><strong>ISBN:</strong> ${book.isbn}</p>
+                         <p class="card-text"><strong>Genre:</strong> ${book.genre}</p>
+                         <p class="card-text"><strong>Description:</strong> ${book.description}</p>
+                         <p class="card-text"><strong>Rating:</strong> ${book.rating}</p>
+                         <h6 class="card-subtitle mb-2 text-muted">Price: $${book.price}</h6>
+                         <div class="d-flex justify-content-between align-items-center">
+                           <div class="btn-group">
+                             <form action="${pageContext.request.contextPath}/readLater" method="POST">
+                               <input type="hidden" name="bookId" value="${book.id}">
+                               <button type="submit" class="btn btn-sm btn-outline-secondary">Read Later</button>
+                             </form>
+                             <form action="${pageContext.request.contextPath}/liked" method="POST">
+                               <input type="hidden" name="bookId" value="${book.id}">
+                               <button type="submit" class="btn btn-sm btn-outline-secondary">Liked</button>
+                             </form>
                            </div>
                          </div>
+                       </div>
                      </div>
+                   </div>
                  </c:forEach>
              </div>
          </div>

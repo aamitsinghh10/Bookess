@@ -12,6 +12,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
+
+    <link href="resources/css/liked.css/" rel="stylesheet" type="text/css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -47,7 +49,7 @@
                             <h6 class="card-subtitle mb-2 text-muted">Price: $${book.price}</h6>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a href="${pageContext.request.contextPath}/book?id=${book.id}" class="btn btn-sm btn-outline-secondary">View</a>
+                                    <a href="${pageContext.request.contextPath}/book?id=${book.id}" class="btn btn-sm btn-outline-secondary">Remove</a>
                                 </div>
                             </div>
                         </div>

@@ -11,7 +11,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
- <link href="resources/css/addBook.css" rel="stylesheet" type="text/css">
+ <link href="resources/css/addBook.css/" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -32,64 +32,34 @@
     </div>
   </nav>
 <div class="container">
-    <h1 class="my-4">Add Book</h1>
-    <form action="addBook" method="post" class="mb-4" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" class="form-control">
-        </div>
+    <div>
+        <div class="wrapper fadeInDown">
+            <div id="fadeIn first">
+                <h2 class='addBook'>Add New Book</h2>
+            </div class=".form-wrapper">
+            <br/>
+            <form action="${pageContext.request.contextPath}/addBook" method="POST">
+                <input type='text' id='title' class="fadeIn second" name='title'
+                placeholder="Title" value=""/>
+                <input type='text' id='author' class="fadeIn third" name='author'
+                placeholder="Author" value=""/>
+                <input type='text' id='isbn' class="fadeIn fourth" name='isbn'
+                placeholder="Isbn" value=""/>
+                <input type='text' id='genre' class="fadeIn fifth" name='genre'
+                placeholder="Genre" value=""/>
+                <input type='text' id='description' class="fadeIn sixth" name='description'
+                placeholder="Description" value=""/>
+                <input type='text' id='coverimage' class="fadeIn seventh" name='coverImage'
+                placeholder="Cover Image" value=""/>
+                <input type='number' id='rating' class="fadeIn eighth" name='rating'
+                placeholder="Rating" value="" step="0.1"/>
+                <input type='number' id='price' class="fadeIn ninth" name='price'
+                placeholder="Price" value="" step="0.01"/>
 
-        <div class="form-group">
-            <label for="author">Author:</label>
-            <input type="text" id="author" name="author" class="form-control">
+                <input type="submit" class="btn-login" value="Add Book" />
+            </form>
         </div>
-
-        <div class="form-group">
-            <label for="isbn">ISBN:</label>
-            <input type="text" id="isbn" name="isbn" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label for="genre">Genre:</label>
-            <input type="text" id="genre" name="genre" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" class="form-control"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="coverImage">Cover Image:</label>
-            <input type="text" id="coverImage" name="coverImage" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label for="rating" class="mr-2">Rating:</label>
-            <input type="number" step="0.1" min="0" max="10" id="rating" name="rating" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label for="price" class="mr-2">Price:</label>
-            <input type="number" step="0.01" min="0" id="price" name="price" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <input type="submit" value="Add Book" class="btn btn-primary">
-        </div>
-    </form>
-
-    <c:if test="${not empty param.title}">
-        <h2>Book Details:</h2>
-        <p><strong>Title:</strong> ${param.title}</p>
-        <p><strong>Author:</strong> ${param.author}</p>
-        <p><strong>ISBN:</strong> ${param.isbn}</p>
-        <p><strong>Genre:</strong> ${param.genre}</p>
-        <p><strong>Description:</strong> ${param.description}</p>
-        <p><strong>Cover Image:</strong> ${param.coverImage}</p>
-        <p><strong>Rating:</strong> ${param.rating}</p>
-        <p><strong>Price:</strong> ${param.price}</p>
-    </c:if>
+    </div>
 </div>
 </body>
 </html>

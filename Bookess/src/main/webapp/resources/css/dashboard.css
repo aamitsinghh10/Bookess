@@ -93,3 +93,16 @@ h1 {
   border-color: #dc3545;
   color: #fff;
 }
+/* Dashboard buttons */
+.btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-weight: 400;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  color: #fff;
+}
