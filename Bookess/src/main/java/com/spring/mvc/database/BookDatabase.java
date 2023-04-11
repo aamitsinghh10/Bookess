@@ -59,6 +59,7 @@ public class BookDatabase {
 
     public Book getBookByIsbn(String isbn) {
         Session session = sessionFactory.getCurrentSession();
+        System.out.println("Get Book by ISBN");
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Book> criteria = builder.createQuery(Book.class);
         Root<Book> root = criteria.from(Book.class);
