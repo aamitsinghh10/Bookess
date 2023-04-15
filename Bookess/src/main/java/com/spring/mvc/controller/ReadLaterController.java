@@ -31,14 +31,16 @@ public class ReadLaterController {
 
 
     @PostMapping("/readLater")
-    public String addPostReadLaterBook(HttpServletRequest request, Model model)
+    public String addPostLikedBook(@RequestParam("bookId") Long bookId, Model model)
     {
-        String isbn = request.getParameter("isbn");
-        if (!readLaterService.bookExists(isbn))
-        {
-            Book book = bookService.getBookByIsbn(isbn);
+        System.out.println("id "+bookId);
 
-            if (book != null) { // add null check here
+        if (!readLaterService.ReadLaterBookExistsById(bookId))
+        {
+            Book book = bookService.getBookById(bookId);
+            System.out.println("Controller "+book);
+
+            if (book != null) {
                 ReadLaterBooks readLaterBooks = new ReadLaterBooks();
                 readLaterBooks.setTitle(book.getTitle());
                 readLaterBooks.setAuthor(book.getAuthor());
@@ -49,15 +51,19 @@ public class ReadLaterController {
                 readLaterBooks.setPrice(book.getPrice());
                 readLaterBooks.setCoverImage(book.getCoverImage());
 
-                System.out.println("Add Read Later Books");
-                readLaterService.addReadLaterBooks(readLaterBooks);
+                try {
+                    readLaterService.addReadLaterBooks(readLaterBooks);
+                    return "redirect:/readLater";
+                } catch (Exception e) {
+                    model.addAttribute("errorMessage", "Failed to add book to liked list: " + e.getMessage());
+                }
             } else {
-                model.addAttribute("errorMessage", "Book not found"); // Set an error message in the model
+                model.addAttribute("errorMessage", "Book not found");
             }
         } else {
-            model.addAttribute("errorMessage", "Book already liked"); // Set an error message in the model
+            model.addAttribute("errorMessage", "Book already liked");
         }
-        return "redirect:/readLater";
-    }
 
+        return "redirect:/error";
+    }
 }

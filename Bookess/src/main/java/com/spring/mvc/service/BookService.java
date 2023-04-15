@@ -24,7 +24,9 @@ public class BookService {
         return bookDatabase.getBookByIsbn(isbn);
     }
     public Book getBookById(long bookId){
-        return this.bookDatabase.getBookById(bookId);
+        Book book =  this.bookDatabase.getBookById(bookId);
+        System.out.println("service "+book);
+        return book;
     }
 
     public List<Book> getAllBooks() {

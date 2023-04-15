@@ -15,6 +15,9 @@ public class ReadLaterService {
     public void addReadLaterBooks(ReadLaterBooks readLaterBooks) {
         this.readLaterDatabase.addReadLaterBooks(readLaterBooks);
     }
+    public boolean ReadLaterBookExistsById(Long id) {
+        return readLaterDatabase.ReadLaterBookExistsById(id);
+    }
     public boolean bookExists(String isbn) {
         return readLaterDatabase.bookExists(isbn);
     }

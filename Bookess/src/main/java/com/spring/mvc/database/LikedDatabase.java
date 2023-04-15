@@ -16,10 +16,19 @@ public class LikedDatabase {
     @Autowired
     private SessionFactory sessionFactory;
     public void addLikedBooks(LikedBooks likedBooks) {
-        if (!likedBookExists(likedBooks.getIsbn())) {
+        if (!likedBookExistsById(likedBooks.getId())) {
+            //System.out.println("Add liked books");
             Session session = sessionFactory.getCurrentSession();
             session.save(likedBooks);
         }
+    }
+    public boolean likedBookExistsById(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        String sql = "FROM LikedBooks WHERE id = :id";
+        LikedBooks likedBooks = session.createQuery(sql, LikedBooks.class)
+                .setParameter("id", id)
+                .uniqueResult();
+        return likedBooks != null;
     }
 
     public boolean likedBookExists(String isbn) {

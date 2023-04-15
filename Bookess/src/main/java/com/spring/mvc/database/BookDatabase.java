@@ -45,9 +45,11 @@ public class BookDatabase {
 
 
     public Book getBookById(long bookId){
-        Session session = sessionFactory.getCurrentSession();
+        System.out.println("Book DB" +bookId);
+        Session session = sessionFactory.openSession();
         Book book = session.get(Book.class, bookId);
         session.close();
+        System.out.println(book);
         return book;
     }
     public Book loadBook(long bookId) {

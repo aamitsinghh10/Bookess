@@ -1,5 +1,6 @@
 package com.spring.mvc.database;
 
+import com.spring.mvc.entity.LikedBooks;
 import com.spring.mvc.entity.ReadLaterBooks;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,7 +32,14 @@ public class ReadLaterDatabase {
             System.out.println("Book already exists in Read Later list.");
         }
     }
-
+    public boolean ReadLaterBookExistsById(Long id) {
+        Session session = factory.getCurrentSession();
+        String sql = "FROM ReadLaterBooks WHERE id = :id";
+        ReadLaterBooks readLaterBooks = session.createQuery(sql, ReadLaterBooks.class)
+                .setParameter("id", id)
+                .uniqueResult();
+        return readLaterBooks != null;
+    }
     public boolean bookExists(String isbn) {
         Session session = factory.getCurrentSession();
         String sql = "FROM ReadLaterBooks WHERE isbn = :isbn";
