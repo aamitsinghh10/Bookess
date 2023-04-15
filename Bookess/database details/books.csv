@@ -1,0 +1,9 @@
+id,title,author,isbn,genre,description,coverImage,rating,price
+1,"Lord of the Rings","J.R.R. Tolkien",978-0261103573,Fantasy,"A classic high fantasy adventure",https://s26162.pcdn.co/wp-content/uploads/2017/05/the-lord-of-the-rings-book-cover.jpg,4.5,20.99
+2,"3 Idiots","Chetan Bhagat",978-8129135544,Comedy,"A story about three engineering students",https://m.media-amazon.com/images/M/MV5BNTkyOGVjMGEtNmQzZi00NzFlLTlhOWQtODYyMDc2ZGJmYzFhXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg,4.1,12.5
+3,"Fire and Blood","George R. R. Martin",978-1524796280,Fantasy,"A history of House Targaryen",https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/91iMu22uEWL.jpg,4,24.99
+4,Titanic,"Walter Lord",978-0805077646,History,"The story of the Titanic disaster",https://book-assets.openroadmedia.com/9781844686476.jpg,3.8,8.99
+5,"Harry Potter and the Philosopher's Stone","J.K. Rowling",978-1408855652,Fantasy,"The first book in the Harry Potter series",https://images.unsplash.com/photo-1600189261867-30e5ffe7b8da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aGFycnklMjBwb3R0ZXIlMjBib29rfGVufDB8fDB8fA%3D%3D&w=1000&q=80,4.8,14.99
+6,"Playing It My Way","Sachin Tendulkar",978-1473605176,Autobiography,"The life story of the legendary cricketer",https://cdn.img.gen.in/saradhi-books/34101/portfolio.jpg?height=200&biz=2596&meta=true,4.2,17.99
+7,Doglapan,"Sharat Kumar",978-9353339265,Thriller,"A suspenseful story about a detective",https://pbs.twimg.com/media/FjxXt7BUYAALyWL.jpg:large,3.9,9.99
+17,"Game of Thrones","George R.R. Martin",978-0553573404,Fantasy,"A tale of political intrigue and epic battles set in a medieval-inspired world",https://watchersonthewall.com/wp-content/uploads/2019/08/Cover-Photography-of-GoT.jpg,4.4,19.99

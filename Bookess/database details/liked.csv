@@ -1,0 +1,4 @@
+id,title,author,isbn,genre,description,coverImage,rating,price
+1,Doglapan,"Sharat Kumar",978-9353339265,Thriller,"A suspenseful story about a detective",https://pbs.twimg.com/media/FjxXt7BUYAALyWL.jpg:large,3.9,9.99
+2,"Fire and Blood","George R. R. Martin",978-1524796280,Fantasy,"A history of House Targaryen",https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/91iMu22uEWL.jpg,4,24.99
+3,"Playing It My Way","Sachin Tendulkar",978-1473605176,Autobiography,"The life story of the legendary cricketer",https://cdn.img.gen.in/saradhi-books/34101/portfolio.jpg?height=200&biz=2596&meta=true,4.2,17.99
